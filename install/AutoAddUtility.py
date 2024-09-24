@@ -56,7 +56,7 @@ def get_last_sm_number(file_path):
 
 # 在sm文件中插入内容
 def write_to_sm(file_path, sm_id):
-    insert_text = f'sm{sm_id};GrenadeRec;ClearThrow;'
+    insert_text = f'sm{sm_id};ClearThrow;'
     count = sm_id + 2
     C_radial_radio_tab_0_text_ID = f'cl_radial_radio_tab_0_text_{count} cmd";'
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -182,15 +182,22 @@ def main():
         directories = [d for d in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, d))]
         print(f"当前cfg中存在以下地图：{directories}")
         map_name = input("你要向什么地图中插入？(输入英文地图名)：")
+
         folder_path = os.path.join(folder_path, map_name)
+        directories = [d for d in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, d))]
+        print(f"当前地图下存在一下阵营：{directories}")
+        camp_name = input("你要向什么阵营中插入？(输入阵营)：")
+
+        folder_path = os.path.join(folder_path, camp_name)
         directories = [d for d in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, d))]
         print(f"当前地图下存在以下分类: {directories}")
         class_name = input("你要向哪个分类中插入？(刚才指定的地图文件夹中的文件夹名)：")
+
         add_textfile_path = os.path.join(folder_path, class_name, 'RadioInfo1Text.cfg')
         add_cmdfile_path = os.path.join(folder_path, class_name, 'RadioInfo1CMD.cfg')
         resource_path = './resource/platform_schinese.txt'
         target_text = '#CFG_Noun_None'
-        new_text_var = f'\t"CFG_{utility_english_name}"                    "{utility_chinese_name}"\n'
+        new_text_var = f'\t"CFG_{utility_english_name}"                 "{utility_chinese_name}"\n'
         text_var = f"#CFG_{utility_english_name}"
 
         vacant_slot = count_lines_with_text(add_textfile_path, target_text)
